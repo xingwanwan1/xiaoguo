@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body ng-app="myapp" ng-controller="detail">
+    <nav ng-bind="data.name">
+
+    </nav>
+    <main id="contents">
+
+    </main>
+    <script src="/common/angular.js"></script>
+    <script src="/common/jquery.js"></script>
+    <script>
+        var app = angular.module("myapp", [])
+        app.controller("detail", function($scope, $http) {
+            console.log()
+            var id = window.location.hash.slice(1)
+            $http({
+                method: "get",
+                url: "/api/detail/" + id
+            }).success(function(data) {
+                console.log(data)
+                $scope.data = data
+                $("#contents").html(data.content)
+            })
+
+            // $scope.hreffn = function(i) {
+            //     window.location.href = "/detail/" + i.id
+            // }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+    <script type="text/javascript" charset="utf-8" src="/common/UEditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/common/UEditor/ueditor.all.js">
+    </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="/common/UEditor/lang/zh-cn/zh-cn.js"></script>
+    <script language="javascript" type="text/javascript" src="/common/My97DatePicker/WdatePicker.js"></script>
+</head>
+
+<body ng-app="myapp" ng-controller="submit">
+    <ul>
+        <li><label for="">标题:</label><input type="text" name="" value="" ng-model="data.name"></li>
+        <li><label for="">时间:</label><input type="text" id="d243" ng-model="data.time" class="art_time" onFocus="WdatePicker({startDate:'%y-%M-01 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" /></li>
+
+    </ul>
+    <script id="container" name="content" type="text/plain">
+
+    </script>
+    <button ng-click="submitFn()">提交</button>
+    <script src="/common/angular.js"></script>
+    <script src="/common/jquery.js"></script>
+    <script type="text/javascript">
+        var ue = UE.getEditor('container');
+        var app = angular.module("myapp", []);
+        app.controller("submit", function($scope, $http) {
+            $scope.data = {
+                name: "",
+                time: ""
+            }
+            $scope.submitFn = function() {
+                $scope.data.content = ue.getContent()
+                $scope.data.time = $("#d243").val()
+                console.log($scope.data)
+                $http({
+
+                    method: 'post',
+
+                    url: '/api/article',
+
+                    data: $scope.data
+
+                }).success(function(req) {
+
+                    console.log(req);
+
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>
+
+</html>
+
+</html>

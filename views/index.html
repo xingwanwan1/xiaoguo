@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        li {
+            width: 500px;
+            margin: 3px auto;
+            overflow: hidden;
+            padding: 5px 0;
+            background: lightgoldenrodyellow;
+            border-bottom: 1px solid #ccc;
+        }
+        
+        li span:nth-child(1) {
+            float: left;
+        }
+        
+        li span:nth-child(2) {
+            float: right;
+        }
+    </style>
+</head>
+
+<body ng-app="myapp" ng-controller="list">
+    <div>
+        <ul>
+            <li ng-repeat="i in data" ng-click="hreffn(i)">
+                <span>{{i.name}}</span>
+                <span>{{i.time}}</span>
+            </li>
+        </ul>
+    </div>
+    <script src="/common/angular.js"></script>
+    <script>
+        var app = angular.module("myapp", [])
+        app.controller("list", function($scope, $http) {
+
+            $http({
+                method: "get",
+                url: "/api/select"
+            }).success(function(data) {
+                console.log(data)
+                $scope.data = data.data
+            })
+
+            $scope.hreffn = function(i) {
+                window.location.href = "/detail/#" + i.id
+            }
+        })
+    </script>
+</body>
+
+</html>
